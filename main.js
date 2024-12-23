@@ -10,36 +10,59 @@ window.sendData = async function (channel, value) {
 
 document.querySelector('#app').innerHTML = `
   <div>
-    <button id='startButton'>Start Sound Engine</button>
+    <button id='startButton'>Enstrümanı Çalıştır</button>
   </div>
   <hr />
   <div id="sliders">
     <p>
-      <button id='playButton'>PLAY</button>
+    <h2> Ses Çıkarmaya Başla </h2>
+      <button id='playButton'>Bastıkça Ses Çıkar</button>
     </p>
     <p>
-      <label for="kgate"> PLAY On / Off</label> 
+      <label for="kgate"> Ses Çıkar Aç/Kapa</label> 
       <input type="checkbox" id="kgate"  class="slider-input"  onchange="sendData(this.id, this.checked ? 1 : 0)">
       <span id="kgateval"> 0 </span> </input>
     </p>
     <hr />
     <p>
-      <label for="kamp">Volume</label>  
+      <label for="kamp">Ses Seviyesi</label>  
       <input type="range" id="kampmain" class="slider-input" min="0" max="1" value="0.5" step="0.01">
       <span id="kampmainval"> 0 </span> </input> 
     </p>
    
     <p>
-      <label for="kRvbSendAmt">Reverb wet amount</label>  
+      <label for="kRvbSendAmt">Reverb Miktarı</label>  
       <input type="range" id="kRvbSendAmt" class="slider-input" min="0" max="1" value="0" step="0.01">
       <span id="kRvbSendAmtval"> 0 </span> </input> 
     </p>
     <hr />
     <p>
-      att_dur <input type="text" id="iatt_dur" class="envelope" value="0.1" size="2"></input>  
-      dec_dur <input type="text" id="idec_dur" class="envelope" value="0.1" size="2"></input>
-      sus_dur <input type="text" id="isus_dur" class="envelope" value="99999" size="2"></input>
-      rel_dur<input type="text" id="irel_dur" class="envelope" value="0.1" size="2"></input>
+  
+    <br> 
+      Atak Süresi <input type="range" id="att_durslider" class="slider-input" min="0.005" max="0.5" value="0.1" step="0.01">
+      <span id="att_dursliderval"> 0.1 </span> </input>
+
+    <br>
+      Düşme Süresi <input type="range" id="dec_durslider" class="slider-input" min="0.005" max="1" value="0.1" step="0.01">
+      <span id="dec_dursliderval"> 0.1 </span> </input>
+    <br>
+      Sürme Süresi<input type="range" id="sus_durslider" class="slider-input" min="0.005" max="9999" value="0.1" step="0.01">
+      <span id="sus_dursliderval"> 0.1 </span> </input>
+      <input type="checkbox" id=sustainmax class="slider-input">Sürekli</input>
+
+
+    <br>
+      Susma Süresi <input type="range" id="rel_durslider" class="slider-input" min="0.005" max="1" value="0.1" step="0.01">
+      <span id="rel_dursliderval"> 0.1 </span> </input>
+
+    <br> 
+    <br>
+    <button id="darbelibutton">Darbeli</button>
+    <button id="surenbutton">Süren</button>
+
+
+    
+
     </p>
     <p>
       val1 <input type="text" id="ienv_val1" class="envelope" value="1" size="2"></input>  
@@ -48,37 +71,38 @@ document.querySelector('#app').innerHTML = `
     </p> 
     <hr />
     <p>
-      <label for="gendy_kampdist">gendy_kampdist</label>  
-      <input type="range" id="gendy_kampdist" class="slider-input" min="1" max="5" value="1" step="1">
-      <span id="gendy_kampdistval"> 1 </span> </input> 
+      <label for="gendy_kampdist">Genlik dağılım davranışı</label>  
+      <input type="range" id="gendy_kampdist" class="slider-input" min="0" max="5" value="0" step="1">
+      <span id="gendy_kampdistval"> 0 </span> </input> 
     </p>    
-    <label for="gendy_kdurdist">gendy_kdurdist</label>  
-    <input type="range" id="gendy_kdurdist" class="slider-input" min="1" max="5" value="1" step="1">
+    <label for="gendy_kdurdist">Süre dağılım davranışı</label>  
+    <input type="range" id="gendy_kdurdist" class="slider-input" min="0" max="5" value="0" step="1">
       <span id="gendy_kdurdistval"> 0 </span> </input> 
     <p>
-    <label for="gendy_kminfreq">gendy_kminfreq</label>  
+    <h3>Kaynak Frekans Aralığı</h3>
+    <label for="gendy_kminfreq">Frekans1</label>  
     <input type="range" id="gendy_kminfreq" class="slider-input" min="20" max="4000" value="20" step="1">
       <span id="gendy_kminfreqval"> 20 </span> </input> 
     <p>
     
     </p>
-      <label for="linkFreq">Link kminfreq and kmaxfreq</label>
+      <label for="linkFreq">Değişimi bağla</label>
       <input type="checkbox" id="linkFreq" class="slider-input">
     </p>
     </p>    
-    <label for="gendy_kmaxfreq">gendy_kmaxfreq</label>  
+    <label for="gendy_kmaxfreq">Frekans2</label>  
     <input type="range" id="gendy_kmaxfreq" class="slider-input" min="21" max="4000" value="21" step="1">
       <span id="gendy_kmaxfreqval"> 21 </span> </input> 
     </p>    
-    <label for="gendy_kampscl">gendy_kampscl</label>  
-    <input type="range" id="gendy_kampscl" class="slider-input" min="0.1" max="1" value="0.1" step="0.01">
+    <label for="gendy_kampscl">Frekans Salınımının Rastlantısallığı</label>  
+    <input type="range" id="gendy_kampscl" class="slider-input" min="0.1" max="1" value="0" step="0.01">
       <span id="gendy_kampsclval"> 0 </span> </input> 
     </p>    
-    <label for="gendy_kdurscl">gendy_kdurscl</label>  
-    <input type="range" id="gendy_kdurscl" class="slider-input" min="0.1" max="1" value="0.1" step="0.01">
-      <span id="gendy_kdursclval"> 0.1 </span> </input> 
+    <label for="gendy_kdurscl">Frekans Salınımının Hızı</label>  
+    <input type="range" id="gendy_kdurscl" class="slider-input" min="0.1" max="1" value="0" step="0.01">
+      <span id="gendy_kdursclval"> 0 </span> </input> 
     </p>
-    <button id='randomizeButton'>Randomize Gendy Parameters</button>    
+    <button id='randomizeButton'>Parametreleri Rastgele Belirle</button>    
   </div>
 `;
 
@@ -169,6 +193,83 @@ kmaxfreq.addEventListener('input', (event) => {
     sendData('gendy_kmaxfreq', value);
 });
 
+// Slider event listeners
+att_durslider.addEventListener('input', (event) => {
+    sendData('iatt_dur', event.target.value);
+    document.querySelector('#att_dursliderval').innerText = event.target.value;
+}
+);
+dec_durslider.addEventListener('input', (event) => {
+    sendData('idec_dur', event.target.value);
+    document.querySelector('#dec_dursliderval').innerText = event.target.value;
+}
+);
+sus_durslider.addEventListener('input', (event) => {
+    sendData('isus_dur', event.target.value);
+    document.querySelector('#sus_dursliderval').innerText = event.target.value;
+}
+);
+
+
+rel_durslider.addEventListener('input', (event) => {
+  sendData('irel_dur', event.target.value);
+  document.querySelector('#rel_dursliderval').innerText = event.target.value;
+}
+);
+
+sustainmax.addEventListener('change', (event) => {
+  switch (event.target.checked) {
+    case true:
+      sendData("isus_dur", 99999);
+      sus_durslider.value = 99999;
+      document.querySelector('#sus_dursliderval').innerText = 99999;
+      break;
+      
+    case false:
+      sendData("isus_dur", 0.005);
+      sus_durslider.value = 0.005;
+      document.querySelector('#sus_dursliderval').innerText = 0.005;
+      break;
+    }
+
+      
+
+   
+}
+);
+darbelibutton.addEventListener('click', (event) => {
+    sendData("iatt_dur", 0.005);
+    sendData("idec_dur", 0.005);
+    sendData("isus_dur", 0.005);
+    sendData("irel_dur", 0.005);
+    att_durslider.value = 0.005;
+    dec_durslider.value = 0.005;
+    sus_durslider.value = 0.005;
+    rel_durslider.value = 0.005;
+    document.querySelector('#att_dursliderval').innerText = 0.005;
+    document.querySelector('#dec_dursliderval').innerText = 0.005;
+    document.querySelector('#sus_dursliderval').innerText = 0.005;
+    document.querySelector('#rel_dursliderval').innerText = 0.005;
+}
+);
+surenbutton.addEventListener('click', (event) => {
+    sendData("iatt_dur", 0.005);
+    sendData("idec_dur", 0.005);
+    sendData("isus_dur", 99999);
+    sendData("irel_dur", 0.005);
+    att_durslider.value = 0.005;
+    dec_durslider.value = 0.005;
+    sus_durslider.value = 99999;
+    rel_durslider.value = 0.005;
+    document.querySelector('#att_dursliderval').innerText = 0.005;
+    document.querySelector('#dec_dursliderval').innerText = 0.005;
+    document.querySelector('#sus_dursliderval').innerText = 99999;
+    document.querySelector('#rel_dursliderval').innerText = 0.005;
+
+}
+);
+
+
 // Randomize Gendy Parameters
 document.querySelector('#randomizeButton').addEventListener('click', () => {
   const randomizeParameter = (id, min, max, step = 1) => {
@@ -201,5 +302,6 @@ document.querySelectorAll('.slider-input').forEach((slider) => {
         }
     });
 }); 
+
 
 

@@ -26,14 +26,14 @@ endin
 schedule "Reverb", 0, -1
 
 instr set_init
-  chnset 1, "gendy_kampdist"
-  chnset 1, "gendy_kdurdist"
+  chnset 0, "gendy_kampdist"
+  chnset 0, "gendy_kdurdist"
   chnset 0.0001, "gendy_kadpar"
   chnset 0.0001, "gendy_kddpar"
   chnset 20, "gendy_kminfreq"
   chnset 20, "gendy_kmaxfreq"
-  chnset 0.1, "gendy_kampscl"
-  chnset 0.1, "gendy_kdurscl"
+  chnset 0, "gendy_kampscl"
+  chnset 0, "gendy_kdurscl"
 
   chnset 0, "kgate"
   chnset 0.5, "kampmain"
@@ -42,7 +42,7 @@ instr set_init
 
   chnset 0.1, "iatt_dur"
   chnset 0.1, "idec_dur"
-  chnset 60*60*24, "isus_dur"
+  chnset 0.1, "isus_dur"
   chnset 0.1, "irel_dur"
   chnset 1, "ienv_val1"
   chnset 0.8, "ienv_val2"
